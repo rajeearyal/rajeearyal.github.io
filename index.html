@@ -3,15 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welcome to My Website</title> 
+  <title>Rajee Aryal – Artist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #f9f4ef, #e8e2da);
+    }
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+    p {
+      margin-bottom: 2rem;
+      color: #444;
+      text-align: center;
+      max-width: 600px;
+    }
+    .nav {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav a {
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      color: white;
+      background-color: #444;
+      transition: background 0.3s;
+    }
+    .nav a:hover {
+      background-color: #222;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, I’m Rajee Aryal 👋</h1>
-  <p>This is my first GitHub Pages site!</p>
+  <h1>Welcome to the Art of Rajee Aryal</h1>
+  <p>Explore works that resemble woven textures and patterns, both in the physical world and in digital form.</p>
 
-  <script>
-    // Example JS: add a message dynamically
-    document.body.insertAdjacentHTML("beforeend", "<p>JavaScript is working ✅</p>");
-  </script>
+  <div class="nav">
+    <a href="physical.html">Physical Works</a>
+    <a href="digital.html">Digital Works</a>
+  </div>
 </body>
 </html>
