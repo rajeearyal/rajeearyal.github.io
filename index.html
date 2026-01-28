@@ -2,26 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>8-Color Palette</title>
+  <title>Pattern Painting – 16 Color Palette</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --navy: #1A2E5A;
-      --mid-blue: #4A82C1;
-      --sage: #A7B99A;
-      --terracotta: #C07C58;
-      --camel: #D3B08A;
-      --mist-gray: #E6E7E9;
-      --peach: #F5C9A9;
-      --bright-yellow: #FFEA3C;
+      /* 16-color reduced palette, based on your painting */
+      --c-navy:       #1A2E5A;
+      --c-mid-blue:   #4A82C1;
+      --c-powder:     #C8D8E8;
+      --c-steel:      #6B88A1;
 
-      --bg: #f5f5f7;
-      --text: #1b1b1f;
-      --muted: #6b6b72;
-      --card-bg: #ffffffcc;
-      --radius-lg: 18px;
-      --radius-sm: 10px;
-      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.08);
+      --c-sage:       #A7B99A;
+      --c-olive:      #8C9A63;
+      --c-mint:       #DDEDD8;
+      --c-teal-dark:  #1C4F58;
+
+      --c-terracotta: #C07C58;
+      --c-camel:      #D3B08A;
+      --c-ochre:      #D8C27A;
+      --c-brown:      #8B5E3C;
+
+      --c-mist:       #E6E7E9;
+      --c-gray:       #CBD2D7;
+      --c-peach:      #F5C9A9;
+      --c-yellow:     #FFEA3C;
+
+      --bg: #f4f5f7;
     }
 
     * {
@@ -31,242 +37,47 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #ffffff, var(--bg));
-      color: var(--text);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: radial-gradient(circle at top left, #ffffff, var(--bg));
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
       padding: 24px;
     }
 
-    .wrapper {
-      max-width: 1080px;
-      width: 100%;
-      background: var(--card-bg);
-      border-radius: 28px;
-      box-shadow: var(--shadow-soft);
-      padding: 32px 32px 36px;
-      backdrop-filter: blur(18px);
-    }
-
-    header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    header h1 {
-      font-size: clamp(1.6rem, 3vw, 2.1rem);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    header p {
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    .meta {
-      margin-top: 6px;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .palette-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 12px;
-    }
-
-    @media (max-width: 860px) {
-      .palette-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .wrapper {
-        padding: 22px 18px 24px;
-        border-radius: 20px;
-      }
-      .palette-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    .swatch-card {
+    .frame {
       background: #ffffff;
-      border-radius: var(--radius-lg);
-      padding: 14px 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-      transition:
-        transform 0.15s ease-out,
-        box-shadow 0.15s ease-out,
-        border-color 0.15s ease-out;
-      cursor: pointer;
+      padding: 18px;
+      border-radius: 18px;
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      max-width: 900px;
+      width: 100%;
     }
 
-    .swatch-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-      border-color: rgba(0, 0, 0, 0.07);
+    .painting {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: 60px;
+      gap: 6px;
+      background: var(--c-mist);
+      padding: 12px;
+      border-radius: 12px;
     }
 
-    .swatch {
-      height: 90px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(0, 0, 0, 0.06);
+    .patch {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: var(--c-gray);
+      /* subtle outline */
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
     }
 
-    .info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      opacity: 0.9;
-    }
-
-    .name {
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
-
-    .hex {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
-        "Liberation Mono", "Courier New", monospace;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .role {
-      margin-top: 2px;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    footer {
-      margin-top: 22px;
-      font-size: 0.8rem;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-  </style>
-</head>
-<body>
-  <main class="wrapper">
-    <header>
-      <div>
-        <h1>8-Color Signature Palette</h1>
-        <p>Reduced from the original artwork’s full color field.</p>
-        <div class="meta">Designed for web, print, and generative work.</div>
-      </div>
-    </header>
-
-    <section class="palette-grid" aria-label="Color palette">
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--navy);"></div>
-        <div class="info">
-          <span class="label">01</span>
-          <span class="name">Navy</span>
-          <span class="hex">#1A2E5A</span>
-          <span class="role">Deep anchor / text & accents</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--mid-blue);"></div>
-        <div class="info">
-          <span class="label">02</span>
-          <span class="name">Mid Blue</span>
-          <span class="hex">#4A82C1</span>
-          <span class="role">Structural highlights & links</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--sage);"></div>
-        <div class="info">
-          <span class="label">03</span>
-          <span class="name">Sage</span>
-          <span class="hex">#A7B99A</span>
-          <span class="role">Soft backgrounds / blocks</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--terracotta);"></div>
-        <div class="info">
-          <span class="label">04</span>
-          <span class="name">Terracotta</span>
-          <span class="hex">#C07C58</span>
-          <span class="role">Warm accents & buttons</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--camel);"></div>
-        <div class="info">
-          <span class="label">05</span>
-          <span class="name">Camel</span>
-          <span class="hex">#D3B08A</span>
-          <span class="role">Secondary backgrounds / cards</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--mist-gray);"></div>
-        <div class="info">
-          <span class="label">06</span>
-          <span class="name">Mist Gray</span>
-          <span class="hex">#E6E7E9</span>
-          <span class="role">Page background / dividers</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--peach);"></div>
-        <div class="info">
-          <span class="label">07</span>
-          <span class="name">Peach</span>
-          <span class="hex">#F5C9A9</span>
-          <span class="role">Soft highlight surfaces</span>
-        </div>
-      </article>
-
-      <article class="swatch-card">
-        <div class="swatch" style="background: var(--bright-yellow);"></div>
-        <div class="info">
-          <span class="label">08</span>
-          <span class="name">Bright Yellow</span>
-          <span class="hex">#FFEA3C</span>
-          <span class="role">High-energy accent / CTAs</span>
-        </div>
-      </article>
-    </section>
-
-    <footer>
-      <span>Use Navy + Mist Gray for base UI, Yellow & Terracotta as accents.</span>
-      <span>Palette derived from original abstract textile-inspired painting.</span>
-    </footer>
-  </main>
-</body>
-</html>
+    /* --- COLOR UTILS --- */
+    .c-navy       { background-color: var(--c-navy); }
+    .c-mid-blue   { background-color: var(--c-mid-blue); }
+    .c-powder     { background-color: var(--c-powder); }
+    .c-steel      { bac
