@@ -1,57 +1,272 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
+  <title>8-Color Palette</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rajee Aryal – Artist</title>
   <style>
+    :root {
+      --navy: #1A2E5A;
+      --mid-blue: #4A82C1;
+      --sage: #A7B99A;
+      --terracotta: #C07C58;
+      --camel: #D3B08A;
+      --mist-gray: #E6E7E9;
+      --peach: #F5C9A9;
+      --bright-yellow: #FFEA3C;
+
+      --bg: #f5f5f7;
+      --text: #1b1b1f;
+      --muted: #6b6b72;
+      --card-bg: #ffffffcc;
+      --radius-lg: 18px;
+      --radius-sm: 10px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #ffffff, var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrapper {
+      max-width: 1080px;
+      width: 100%;
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      padding: 32px 32px 36px;
+      backdrop-filter: blur(18px);
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .meta {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .palette-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrapper {
+        padding: 22px 18px 24px;
+        border-radius: 20px;
+      }
+      .palette-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .swatch-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 16px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #f9f4ef, #e8e2da);
+      gap: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+      transition:
+        transform 0.15s ease-out,
+        box-shadow 0.15s ease-out,
+        border-color 0.15s ease-out;
+      cursor: pointer;
     }
-    h1 {
-      margin-bottom: 1rem;
-      font-size: 2rem;
-      text-align: center;
+
+    .swatch-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.07);
     }
-    p {
-      margin-bottom: 2rem;
-      color: #444;
-      text-align: center;
-      max-width: 600px;
+
+    .swatch {
+      height: 90px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(0, 0, 0, 0.06);
     }
-    .nav {
+
+    .info {
       display: flex;
-      gap: 2rem;
+      flex-direction: column;
+      gap: 2px;
     }
-    .nav a {
-      text-decoration: none;
-      padding: 1rem 2rem;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      color: white;
-      background-color: #444;
-      transition: background 0.3s;
+
+    .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      opacity: 0.9;
     }
-    .nav a:hover {
-      background-color: #222;
+
+    .name {
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .hex {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .role {
+      margin-top: 2px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 22px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
     }
   </style>
 </head>
 <body>
-  <h1>Rajee Aryal</h1>
-  <h1>rajeearyal@gmail.com</h1>
-  <p></p>
+  <main class="wrapper">
+    <header>
+      <div>
+        <h1>8-Color Signature Palette</h1>
+        <p>Reduced from the original artwork’s full color field.</p>
+        <div class="meta">Designed for web, print, and generative work.</div>
+      </div>
+    </header>
 
-  <div class="nav">
-    <a href="physical.html">Physical Works</a>
-    <a href="digital.html">Digital Works </a>
-  </div>
+    <section class="palette-grid" aria-label="Color palette">
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--navy);"></div>
+        <div class="info">
+          <span class="label">01</span>
+          <span class="name">Navy</span>
+          <span class="hex">#1A2E5A</span>
+          <span class="role">Deep anchor / text & accents</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--mid-blue);"></div>
+        <div class="info">
+          <span class="label">02</span>
+          <span class="name">Mid Blue</span>
+          <span class="hex">#4A82C1</span>
+          <span class="role">Structural highlights & links</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--sage);"></div>
+        <div class="info">
+          <span class="label">03</span>
+          <span class="name">Sage</span>
+          <span class="hex">#A7B99A</span>
+          <span class="role">Soft backgrounds / blocks</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--terracotta);"></div>
+        <div class="info">
+          <span class="label">04</span>
+          <span class="name">Terracotta</span>
+          <span class="hex">#C07C58</span>
+          <span class="role">Warm accents & buttons</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--camel);"></div>
+        <div class="info">
+          <span class="label">05</span>
+          <span class="name">Camel</span>
+          <span class="hex">#D3B08A</span>
+          <span class="role">Secondary backgrounds / cards</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--mist-gray);"></div>
+        <div class="info">
+          <span class="label">06</span>
+          <span class="name">Mist Gray</span>
+          <span class="hex">#E6E7E9</span>
+          <span class="role">Page background / dividers</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--peach);"></div>
+        <div class="info">
+          <span class="label">07</span>
+          <span class="name">Peach</span>
+          <span class="hex">#F5C9A9</span>
+          <span class="role">Soft highlight surfaces</span>
+        </div>
+      </article>
+
+      <article class="swatch-card">
+        <div class="swatch" style="background: var(--bright-yellow);"></div>
+        <div class="info">
+          <span class="label">08</span>
+          <span class="name">Bright Yellow</span>
+          <span class="hex">#FFEA3C</span>
+          <span class="role">High-energy accent / CTAs</span>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <span>Use Navy + Mist Gray for base UI, Yellow & Terracotta as accents.</span>
+      <span>Palette derived from original abstract textile-inspired painting.</span>
+    </footer>
+  </main>
 </body>
 </html>
