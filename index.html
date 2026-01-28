@@ -80,4 +80,272 @@
     .c-navy       { background-color: var(--c-navy); }
     .c-mid-blue   { background-color: var(--c-mid-blue); }
     .c-powder     { background-color: var(--c-powder); }
-    .c-steel      { bac
+    .c-steel      { background-color: var(--c-steel); }
+
+    .c-sage       { background-color: var(--c-sage); }
+    .c-olive      { background-color: var(--c-olive); }
+    .c-mint       { background-color: var(--c-mint); }
+    .c-teal-dark  { background-color: var(--c-teal-dark); }
+
+    .c-terracotta { background-color: var(--c-terracotta); }
+    .c-camel      { background-color: var(--c-camel); }
+    .c-ochre      { background-color: var(--c-ochre); }
+    .c-brown      { background-color: var(--c-brown); }
+
+    .c-mist       { background-color: var(--c-mist); }
+    .c-gray       { background-color: var(--c-gray); }
+    .c-peach      { background-color: var(--c-peach); }
+    .c-yellow     { background-color: var(--c-yellow); }
+
+    /* --- PATTERN LAYERS --- */
+
+    .pattern-grid::before,
+    .pattern-dots::before,
+    .pattern-hatch::before,
+    .pattern-crosshatch::before,
+    .pattern-weave::before,
+    .pattern-bricks::before,
+    .pattern-chevron::before,
+    .pattern-basket::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      opacity: 0.9;
+    }
+
+    /* Tiny grid */
+    .pattern-grid::before {
+      background-image:
+        repeating-linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.08) 0px,
+          rgba(0, 0, 0, 0.08) 1px,
+          transparent 1px,
+          transparent 8px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.08) 0px,
+          rgba(0, 0, 0, 0.08) 1px,
+          transparent 1px,
+          transparent 8px
+        );
+    }
+
+    /* Stipple dots */
+    .pattern-dots::before {
+      background-image:
+        radial-gradient(circle at 2px 2px, rgba(0, 0, 0, 0.17) 1px, transparent 0);
+      background-size: 10px 10px;
+    }
+
+    /* Diagonal hatch */
+    .pattern-hatch::before {
+      background-image:
+        repeating-linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.16) 0px,
+          rgba(0, 0, 0, 0.16) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+    }
+
+    /* Crosshatch */
+    .pattern-crosshatch::before {
+      background-image:
+        repeating-linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.12) 0px,
+          rgba(0, 0, 0, 0.12) 1px,
+          transparent 1px,
+          transparent 7px
+        ),
+        repeating-linear-gradient(
+          45deg,
+          rgba(0, 0, 0, 0.12) 0px,
+          rgba(0, 0, 0, 0.12) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+    }
+
+    /* Weave / alternating stripes */
+    .pattern-weave::before {
+      background-image:
+        repeating-linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.12) 0px,
+          rgba(255, 255, 255, 0.12) 6px,
+          rgba(0, 0, 0, 0.09) 6px,
+          rgba(0, 0, 0, 0.09) 12px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.12) 0px,
+          rgba(255, 255, 255, 0.12) 6px,
+          rgba(0, 0, 0, 0.09) 6px,
+          rgba(0, 0, 0, 0.09) 12px
+        );
+      opacity: 0.7;
+    }
+
+    /* Bricks */
+    .pattern-bricks::before {
+      background-image:
+        linear-gradient(
+          rgba(0, 0, 0, 0.08) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.1) 1px,
+          transparent 1px
+        );
+      background-size: 28px 14px, 14px 14px;
+      background-position: 0 0, 0 0;
+    }
+
+    /* Chevron-ish */
+    .pattern-chevron::before {
+      background-image:
+        repeating-linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.16) 0px,
+          rgba(0, 0, 0, 0.16) 2px,
+          transparent 2px,
+          transparent 6px
+        ),
+        repeating-linear-gradient(
+          45deg,
+          rgba(0, 0, 0, 0.05) 0px,
+          rgba(0, 0, 0, 0.05) 2px,
+          transparent 2px,
+          transparent 6px
+        );
+      opacity: 0.8;
+    }
+
+    /* Basket / herringbone suggestion */
+    .pattern-basket::before {
+      background-image:
+        repeating-linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.08) 0px,
+          rgba(0, 0, 0, 0.08) 8px,
+          transparent 8px,
+          transparent 16px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.18) 0px,
+          rgba(255, 255, 255, 0.18) 8px,
+          transparent 8px,
+          transparent 16px
+        );
+      opacity: 0.85;
+    }
+
+    /* Slight variation for some patches */
+    .soft {
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+        inset 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+
+    /* --- LAYOUT OF PATCHES (like an abstract quilt/map) --- */
+
+    /* Row 1 */
+    .p1  { grid-column: 1 / 4;  grid-row: 1 / 3; }
+    .p2  { grid-column: 4 / 7; grid-row: 1 / 2; }
+    .p3  { grid-column: 7 / 10; grid-row: 1 / 2; }
+    .p4  { grid-column: 10 / 13; grid-row: 1 / 3; }
+
+    /* Row 2 */
+    .p5  { grid-column: 4 / 6; grid-row: 2 / 3; }
+    .p6  { grid-column: 6 / 9; grid-row: 2 / 4; }
+    .p7  { grid-column: 9 / 10; grid-row: 2 / 4; }
+
+    /* Row 3 */
+    .p8  { grid-column: 1 / 3;  grid-row: 3 / 5; }
+    .p9  { grid-column: 3 / 5;  grid-row: 3 / 4; }
+    .p10 { grid-column: 5 / 6;  grid-row: 3 / 5; }
+    .p11 { grid-column: 6 / 8;  grid-row: 4 / 5; }
+    .p12 { grid-column: 8 / 11; grid-row: 4 / 6; }
+    .p13 { grid-column: 11 / 13;grid-row: 3 / 4; }
+
+    /* Row 4+ */
+    .p14 { grid-column: 3 / 5;  grid-row: 4 / 6; }
+    .p15 { grid-column: 1 / 2;  grid-row: 5 / 7; }
+    .p16 { grid-column: 2 / 4;  grid-row: 5 / 7; }
+    .p17 { grid-column: 4 / 7;  grid-row: 6 / 8; }
+    .p18 { grid-column: 7 / 9;  grid-row: 5 / 7; }
+    .p19 { grid-column: 9 / 10; grid-row: 6 / 8; }
+    .p20 { grid-column: 10 / 12;grid-row: 4 / 6; }
+    .p21 { grid-column: 12 / 13;grid-row: 4 / 7; }
+
+    .p22 { grid-column: 5 / 7;  grid-row: 5 / 6; }
+    .p23 { grid-column: 7 / 9;  grid-row: 7 / 9; }
+    .p24 { grid-column: 9 / 11; grid-row: 8 / 9; }
+    .p25 { grid-column: 1 / 4;  grid-row: 7 / 9; }
+    .p26 { grid-column: 4 / 5;  grid-row: 8 / 9; }
+    .p27 { grid-column: 5 / 7;  grid-row: 7 / 9; }
+    .p28 { grid-column: 11 / 13;grid-row: 6 / 9; }
+
+    @media (max-width: 720px) {
+      .painting {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-auto-rows: 52px;
+      }
+      /* On small screens, just let the patches flow */
+      .patch {
+        grid-column: auto / span 3;
+        grid-row: auto / span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="painting">
+      <!-- Top band -->
+      <div class="patch p1  c-powder     pattern-grid"></div>
+      <div class="patch p2  c-mid-blue   pattern-hatch"></div>
+      <div class="patch p3  c-sage       pattern-dots"></div>
+      <div class="patch p4  c-navy       pattern-crosshatch"></div>
+
+      <div class="patch p5  c-mint       pattern-dots soft"></div>
+      <div class="patch p6  c-terracotta pattern-weave"></div>
+      <div class="patch p7  c-yellow     pattern-grid"></div>
+
+      <!-- Middle body -->
+      <div class="patch p8  c-camel      pattern-bricks"></div>
+      <div class="patch p9  c-steel      pattern-hatch"></div>
+      <div class="patch p10 c-olive      pattern-basket"></div>
+      <div class="patch p11 c-mist       pattern-dots"></div>
+      <div class="patch p12 c-mid-blue   pattern-chevron"></div>
+      <div class="patch p13 c-peach      pattern-grid soft"></div>
+      <div class="patch p14 c-gray       pattern-weave"></div>
+
+      <!-- Lower region -->
+      <div class="patch p15 c-brown      pattern-crosshatch"></div>
+      <div class="patch p16 c-ochre      pattern-bricks"></div>
+      <div class="patch p17 c-sage       pattern-hatch"></div>
+      <div class="patch p18 c-teal-dark  pattern-basket"></div>
+      <div class="patch p19 c-peach      pattern-dots"></div>
+      <div class="patch p20 c-powder     pattern-grid"></div>
+      <div class="patch p21 c-navy       pattern-weave"></div>
+
+      <div class="patch p22 c-yellow     pattern-chevron"></div>
+      <div class="patch p23 c-terracotta pattern-bricks soft"></div>
+      <div class="patch p24 c-mist       pattern-hatch"></div>
+      <div class="patch p25 c-mid-blue   pattern-crosshatch"></div>
+      <div class="patch p26 c-mint       pattern-dots"></div>
+      <div class="patch p27 c-camel      pattern-basket"></div>
+      <div class="patch p28 c-olive      pattern-grid"></div>
+    </div>
+  </div>
+</body>
+</html>
