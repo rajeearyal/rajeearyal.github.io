@@ -1,0 +1,143 @@
+
+:root {
+  --bg: #000;
+  --fg: #f5f5f5;
+  --muted: #c9c9c9;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 8vw 8px;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.slider {
+  width: min(96vw, 1400px);
+  margin: 10px auto 40px;
+}
+
+.slider-frame {
+  display: grid;
+  grid-template-columns: 64px 1fr 64px;
+  align-items: center;
+  gap: 8px;
+}
+
+.slides-wrap {
+  overflow: hidden;
+}
+
+.slides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  transition: transform 450ms ease;
+}
+
+.slide {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.img-link { display: inline-block; }
+
+.slide img {
+  width: auto;
+  max-width: 100%;
+  max-height: 78vh;
+  height: auto;
+  display: block;
+}
+
+.caption {
+  padding: 16px 0 6px;
+  text-align: left;
+  width: 100%;
+}
+
+.caption .title {
+  font-size: 28px;
+  color: var(--fg);
+}
+
+.caption .meta {
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.nav {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #444;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.nav:hover { border-color: #888; }
+
+.site-footer {
+  color: #666;
+  text-align: right;
+  padding: 20px 8vw 40px;
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .slider-frame { grid-template-columns: 44px 1fr 44px; }
+  .nav { width: 44px; height: 44px; font-size: 22px; }
+  .slide img { max-height: 65vh; }
+  .caption .title { font-size: 22px; }
+  .caption .meta { font-size: 16px; }
+}
+
+
+/* Center everything and keep arrows tight to image */
+.slider {
+  width: min(90vw, 1200px);
+  margin: 20px auto 40px;
+}
+
+.slider-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.slides-wrap {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.slide {
+  align-items: center;
+}
+
+.caption {
+  text-align: center;
+}
+
+.nav {
+  position: static;
+}
