@@ -1,144 +1,560 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Pixel-Mapped Painting</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #111;
-    }
-    .painting {
-      display: grid;
-      grid-template-columns: repeat(64, minmax(0, 8px));
-      grid-auto-rows: 8px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.5);
-    }
-    .cell {
-      width: 8px;
-      height: 8px;
-    }
-    @media (max-width: 700px) {
-      .painting {
-        grid-template-columns: repeat(64, minmax(0, 4px));
-        grid-auto-rows: 4px;
-      }
-      .cell {
-        width: 4px;
-        height: 4px;
-      }
-    }
-    .c0{background-color:#FEFEE9;}
-    .c1{background-color:#F4F6EB;}
-    .c2{background-color:#F0ECE7;}
-    .c3{background-color:#E6EBEA;}
-    .c4{background-color:#FCFACF;}
-    .c5{background-color:#EEEDCC;}
-    .c6{background-color:#F2F1AD;}
-    .c7{background-color:#FBFB77;}
-    .c8{background-color:#ECE5DF;}
-    .c9{background-color:#E2E4DB;}
-    .c10{background-color:#E3E0CE;}
-    .c11{background-color:#DADCD3;}
-    .c12{background-color:#D8D4C5;}
-    .c13{background-color:#D4D2C2;}
-    .c14{background-color:#D0CFC1;}
-    .c15{background-color:#CFD2C5;}
-    .c16{background-color:#C9CEC2;}
-    .c17{background-color:#CACBC1;}
-    .c18{background-color:#C4C7BA;}
-    .c19{background-color:#C0C2B5;}
-    .c20{background-color:#C4C3AF;}
-    .c21{background-color:#C0BDA7;}
-    .c22{background-color:#B9B9A8;}
-    .c23{background-color:#B8B7A1;}
-    .c24{background-color:#B2B49E;}
-    .c25{background-color:#B6B290;}
-    .c26{background-color:#B3B08C;}
-    .c27{background-color:#ABAC93;}
-    .c28{background-color:#ADA884;}
-    .c29{background-color:#A6A788;}
-    .c30{background-color:#A0A882;}
-    .c31{background-color:#A1A379;}
-    .c32{background-color:#A8A271;}
-    .c33{background-color:#9EA06F;}
-    .c34{background-color:#9BA66C;}
-    .c35{background-color:#A09E67;}
-    .c36{background-color:#9B9E62;}
-    .c37{background-color:#9AA360;}
-    .c38{background-color:#9AA362;}
-    .c39{background-color:#919D63;}
-    .c40{background-color:#939E64;}
-    .c41{background-color:#8C9860;}
-    .c42{background-color:#8C9862;}
-    .c43{background-color:#8C9568;}
-    .c44{background-color:#84925E;}
-    .c45{background-color:#87955B;}
-    .c46{background-color:#84945A;}
-    .c47{background-color:#7A8F58;}
-    .c48{background-color:#7E9055;}
-    .c49{background-color:#7F8F55;}
-    .c50{background-color:#7A8C55;}
-    .c51{background-color:#768B54;}
-    .c52{background-color:#758A56;}
-    .c53{background-color:#748758;}
-    .c54{background-color:#718754;}
-    .c55{background-color:#6F8356;}
-    .c56{background-color:#6C8457;}
-    .c57{background-color:#6A8459;}
-    .c58{background-color:#728453;}
-    .c59{background-color:#6C8256;}
-    .c60{background-color:#6B7F56;}
-    .c61{background-color:#717E56;}
-    .c62{background-color:#6E7C58;}
-    .c63{background-color:#6D7F5F;}
-    .c64{background-color:#6A7D61;}
-    .c65{background-color:#677A62;}
-    .c66{background-color:#647963;}
-    .c67{background-color:#657661;}
-    .c68{background-color:#5E735F;}
-    .c69{background-color:#5F735D;}
-    .c70{background-color:#61725E;}
-    .c71{background-color:#5C6E5A;}
-    .c72{background-color:#596C58;}
-    .c73{background-color:#586956;}
-    .c74{background-color:#566852;}
-    .c75{background-color:#50634F;}
-    .c76{background-color:#4E614F;}
-    .c77{background-color:#4B6051;}
-    .c78{background-color:#4D5E51;}
-    .c79{background-color:#4B5C4D;}
-    .c80{background-color:#485A4B;}
-    .c81{background-color:#455548;}
-    .c82{background-color:#455346;}
-    .c83{background-color:#414E42;}
-    .c84{background-color:#3E4C3F;}
-    .c85{background-color:#3D4A41;}
-    .c86{background-color:#39453C;}
-    .c87{background-color:#37443C;}
-    .c88{background-color:#37443E;}
-    .c89{background-color:#36413C;}
-    .c90{background-color:#AE6855;}
-    .c91{background-color:#A86654;}
-    .c92{background-color:#A7604B;}
-    .c93{background-color:#A15B47;}
-    .c94{background-color:#9E5845;}
-    .c95{background-color:#97513E;}
-  </style>
-</head>
-<body>
-  <div class="painting">
-    <div class="cell c18"></div><div class="cell c18"></div><div class="cell c9"></div><div class="cell c45"></div><div class="cell c75"></div><div class="cell c76"></div><div class="cell c55"></div><div class="cell c4"></div><div class="cell c6"></div><div class="cell c6"></div><div class="cell c35"></div><div class="cell c21"></div><div class="cell c11"></div><div class="cell c21"></div><div class="cell c20"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c34"></div><div class="cell c37"></div><div class="cell c37"></div><div class="cell c39"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c37"></div><div class="cell c30"></div><div class="cell c31"></div><div class="cell c30"></div><div class="cell c38"></div><div class="cell c36"></div><div class="cell c43"></div><div class="cell c41"></div><div class="cell c43"></div><div class="cell c40"></div><div class="cell c39"></div><div class="cell c34"></div><div class="cell c39"></div><div class="cell c30"></div><div class="cell c38"></div><div class="cell c37"></div><div class="cell c31"></div><div class="cell c30"></div><div class="cell c38"></div><div class="cell c37"></div><div class="cell c38"></div><div class="cell c32"></div><div class="cell c37"></div><div class="cell c32"></div><div class="cell c33"></div><div class="cell c38"></div><div class="cell c33"></div><div class="cell c33"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c34"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c38"></div><div class="cell c37"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c37"></div><div class="cell c34"></div><div class="cell c36"></div>
-    <div class="cell c18"></div><div class="cell c18"></div><div class="cell c18"></div><div class="cell c39"></div><div class="cell c45"></div><div class="cell c55"></div><div class="cell c55"></div><div class="cell c6"></div><div class="cell c6"></div><div class="cell c21"></div><div class="cell c21"></div><div class="cell c10"></div><div class="cell c13"></div><div class="cell c20"></div><div class="cell c21"></div><div class="cell c21"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c37"></div><div class="cell c38"></div><div class="cell c38"></div><div class="cell c40"></div><div class="cell c37"></div><div class="cell c37"></div><div class="cell c31"></div><div class="cell c30"></div><div class="cell c31"></div><div class="cell c36"></div><div class="cell c38"></div><div class="cell c39"></div><div class="cell c39"></div><div class="cell c41"></div><div class="cell c40"></div><div class="cell c36"></div><div class="cell c32"></div><div class="cell c33"></div><div class="cell c37"></div><div class="cell c39"></div><div class="cell c39"></div><div class="cell c32"></div><div class="cell c36"></div><div class="cell c39"></div><div class="cell c31"></div><div class="cell c30"></div><div class="cell c32"></div><div class="cell c34"></div><div class="cell c33"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c34"></div><div class="cell c34"></div><div class="cell c34"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c37"></div><div class="cell c34"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c38"></div><div class="cell c37"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c36"></div>
-    <div class="cell c18"></div><div class="cell c18"></div><div class="cell c18"></div><div class="cell c39"></div><div class="cell c45"></div><div class="cell c55"></div><div class="cell c51"></div><div class="cell c6"></div><div class="cell c6"></div><div class="cell c21"></div><div class="cell c21"></div><div class="cell c10"></div><div class="cell c10"></div><div class="cell c13"></div><div class="cell c21"></div><div class="cell c21"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c37"></div><div class="cell c38"></div><div class="cell c40"></div><div class="cell c40"></div><div class="cell c40"></div><div class="cell c43"></div><div class="cell c39"></div><div class="cell c31"></div><div class="cell c37"></div><div class="cell c39"></div><div class="cell c39"></div><div class="cell c40"></div><div class="cell c41"></div><div class="cell c40"></div><div class="cell c37"></div><div class="cell c34"></div><div class="cell c30"></div><div class="cell c32"></div><div class="cell c37"></div><div class="cell c40"></div><div class="cell c43"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c39"></div><div class="cell c31"></div><div class="cell c31"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c33"></div><div class="cell c33"></div><div class="cell c33"></div><div class="cell c34"></div><div class="cell c36"></div><div class="cell c34"></div><div class="cell c37"></div><div class="cell c37"></div><div class="cell c37"></div><div class="cell c37"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c36"></div><div class="cell c36"></div>
-    <!-- The rest of the rows continue here in the same pattern,
-         mapping every pixel of the resized painting image.
-         (All 64x64 = 4096 cells are included in this file.) -->
-  </div>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rajee Aryal – Works</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="name">RAJEE ARYAL</div>
+      <div class="email">rajeearyal@gmail.com</div>
+    </header>
+
+    <main>
+      <section class="slider" aria-label="Artwork slider">
+        <div class="slider-frame">
+          <button class="nav prev" type="button" aria-label="Previous">
+            &lt;
+          </button>
+          <div class="slides-wrap">
+            <ul class="slides">
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_1.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_1.jpg"
+                    alt="Cool and Warm"
+                    title="Cool and Warm"
+                    id="wows1_00_01_26_1"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Cool and Warm</div>
+                  <div class="meta">
+                    Color Pencil and Ink Jet Print on Rice Paper, 24&quot; X
+                    24&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_2.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_2.jpg"
+                    alt="Greens"
+                    title="Greens"
+                    id="wows1_00_01_26_2"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Greens</div>
+                  <div class="meta">
+                    Color Pencil and Ink Jet Print on Rice Paper, 24&quot; X
+                    24&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_3.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_3.jpg"
+                    alt="Black"
+                    title="Black"
+                    id="wows1_00_01_26_3"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Black</div>
+                  <div class="meta">
+                    Color Pencil and Ink Jet Print on Rice Paper, 24&quot; X
+                    24&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_4.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_4.jpg"
+                    alt="Blues"
+                    title="Blues"
+                    id="wows1_00_01_26_4"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Blues</div>
+                  <div class="meta">
+                    Color Pencil and Ink Jet Print on Rice Paper, 24&quot; X
+                    24&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_5.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_5.jpg"
+                    alt="Colors"
+                    title="Colors"
+                    id="wows1_00_01_26_5"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Colors</div>
+                  <div class="meta">
+                    Color Pencil and Ink Jet Print on Rice Paper, 24&quot; X
+                    24&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_6.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_6.jpg"
+                    alt='"NON"'
+                    title='"NON"'
+                    id="wows1_00_01_26_6"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">&quot;NON&quot;</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Linen, 20&quot; X 20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_7.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_7.jpg"
+                    alt='"NO"'
+                    title='"NO"'
+                    id="wows1_00_01_26_7"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">&quot;NO&quot;</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Canvas, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_8.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_8.jpg"
+                    alt='"ME"'
+                    title='"ME"'
+                    id="wows1_00_01_26_8"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">&quot;ME&quot;</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Canvas, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_9.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_9.jpg"
+                    alt='"SOS"'
+                    title='"SOS"'
+                    id="wows1_00_01_26_9"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">&quot;SOS&quot;</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Canvas, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_10.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_10.jpg"
+                    alt="Paths to the Core"
+                    title="Paths to the Core"
+                    id="wows1_00_01_26_10"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Paths to the Core</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Canvas, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_11.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_11.jpg"
+                    alt="Storm"
+                    title="Storm"
+                    id="wows1_00_01_26_11"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Storm</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Paper, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_12.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_12.jpg"
+                    alt=""
+                    title=""
+                    id="wows1_00_01_26_12"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title"></div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Paper, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_13.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_13.jpg"
+                    alt="Flight"
+                    title="Flight"
+                    id="wows1_00_01_26_13"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Flight</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Paper, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_14.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_14.jpg"
+                    alt="Patches"
+                    title="Patches"
+                    id="wows1_00_01_26_14"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Patches</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Paper, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_15.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_15.jpg"
+                    alt="Knit"
+                    title="Knit"
+                    id="wows1_00_01_26_15"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Knit</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Paper, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_16.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_16.jpg"
+                    alt="Weave"
+                    title="Weave"
+                    id="wows1_00_01_26_16"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Weave</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Organza and Canvas, 20&quot; X
+                    20&quot;, 2025
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_17.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_17.jpg"
+                    alt="All Asunder"
+                    title="All Asunder"
+                    id="wows1_00_01_26_17"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">All Asunder</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Canvas, 50&quot; X 50&quot;,
+                    2023
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_18.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_18.jpg"
+                    alt="Things We Carry"
+                    title="Things We Carry"
+                    id="wows1_00_01_26_18"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Things We Carry</div>
+                  <div class="meta">
+                    Acrylic and Inkjet Print on Canvas, 50&quot; X 50&quot;,
+                    2024
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_19.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_19.jpg"
+                    alt="Seen, Shown"
+                    title="Seen, Shown"
+                    id="wows1_00_01_26_19"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Seen, Shown</div>
+                  <div class="meta">
+                    Acrylic and Oil on Canvas, 50&quot; X 50&quot;, 2024
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_20.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_20.jpg"
+                    alt="Writing on the Wall"
+                    title="Writing on the Wall"
+                    id="wows1_00_01_26_20"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Writing on the Wall</div>
+                  <div class="meta">
+                    Acrylic and Oil on Canvas, 12&quot; X 12&quot;, 2024
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_21.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_21.jpg"
+                    alt="Pink Phantom II"
+                    title="Pink Phantom II"
+                    id="wows1_00_01_26_21"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Pink Phantom II</div>
+                  <div class="meta">
+                    Acrylic and Oil and Inkjet Print on Canvas, 50&quot; X
+                    50&quot;, 2024
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_22.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_22.jpg"
+                    alt="Agape II"
+                    title="Agape II"
+                    id="wows1_00_01_26_22"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">Agape II</div>
+                  <div class="meta">
+                    Acrylic and Oil and Inkjet Print on Canvas, 50&quot; X
+                    50&quot;, 2024
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_23.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_23.jpg"
+                    alt="A Room of One&#x27;s Own"
+                    title="A Room of One&#x27;s Own"
+                    id="wows1_00_01_26_23"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">A Room of One&#x27;s Own</div>
+                  <div class="meta">
+                    Acrylic and Oil and Inkjet Print on Canvas, 50&quot; X
+                    50&quot;, 2024
+                  </div>
+                </div>
+              </li>
+              <li class="slide">
+                <a
+                  class="img-link"
+                  href="data1/images/00_01_26_24.jpg"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <img
+                    src="data1/images/00_01_26_24.jpg"
+                    alt="Siddhartha, An Indian Tale by Herman Hesse, Annotated"
+                    title="Siddhartha, An Indian Tale by Herman Hesse, Annotated"
+                    id="wows1_00_01_26_24"
+                  />
+                </a>
+                <div class="caption">
+                  <div class="title">
+                    Siddhartha, An Indian Tale by Herman Hesse, Annotated
+                  </div>
+                  <div class="meta">
+                    Inkjet Print and Graphite on Canvas, 50&quot; X 50&quot;,
+                    2022
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <button class="nav next" type="button" aria-label="Next">&gt;</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">© Rajee Aryal</footer>
+    <script src="assets/slider.js"></script>
+  </body>
 </html>
