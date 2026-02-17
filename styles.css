@@ -285,6 +285,10 @@ body {
   transform: translateX(clamp(18px, 2.8vw, 56px));
 }
 
+.mobile-category-nav {
+  display: none;
+}
+
 .tile-link {
   display: block;
   width: 100%;
@@ -402,6 +406,41 @@ body {
     gap: 6px;
   }
 
+  .mobile-category-nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2px;
+  }
+
+  .mobile-category-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #111;
+    border-radius: 999px;
+    background: #fff;
+    color: #111;
+    font-size: 21px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .mobile-category-label {
+    font-family: "Cormorant SC", "Alegreya Sans SC", "Book Antiqua", Palatino,
+      serif;
+    font-size: 22px;
+    line-height: 1.15;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .carousel-stage {
     width: 100%;
     max-height: 58vh;
@@ -436,9 +475,7 @@ body {
   }
 
   .carousel-links {
-    width: 100%;
-    row-gap: 4px;
-    column-gap: 10px;
+    display: none;
   }
 
   .tile-link {

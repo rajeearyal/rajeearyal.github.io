@@ -201,6 +201,28 @@
         const links = document.createElement("div");
         links.className = "carousel-links";
 
+        const mobileCategoryNav = document.createElement("div");
+        mobileCategoryNav.className = "mobile-category-nav";
+
+        const mobilePrev = document.createElement("button");
+        mobilePrev.type = "button";
+        mobilePrev.className = "mobile-category-btn";
+        mobilePrev.setAttribute("aria-label", "Previous category");
+        mobilePrev.textContent = "‹";
+
+        const mobileCategoryLabel = document.createElement("div");
+        mobileCategoryLabel.className = "mobile-category-label";
+
+        const mobileNext = document.createElement("button");
+        mobileNext.type = "button";
+        mobileNext.className = "mobile-category-btn";
+        mobileNext.setAttribute("aria-label", "Next category");
+        mobileNext.textContent = "›";
+
+        mobileCategoryNav.appendChild(mobilePrev);
+        mobileCategoryNav.appendChild(mobileCategoryLabel);
+        mobileCategoryNav.appendChild(mobileNext);
+
         const categoryLinkEls = [];
         let activeCategory = 0;
         let activeImage = 0;
@@ -352,6 +374,7 @@
           categoryLinkEls.forEach((el, i) =>
             el.classList.toggle("active", i === activeCategory),
           );
+          mobileCategoryLabel.textContent = categories[activeCategory].label;
         }
 
         categories.forEach((category, i) => {
@@ -369,8 +392,22 @@
           categoryLinkEls.push(link);
         });
 
+        mobilePrev.addEventListener("click", () => {
+          activeCategory =
+            (activeCategory - 1 + categories.length) % categories.length;
+          activeImage = 0;
+          render();
+        });
+
+        mobileNext.addEventListener("click", () => {
+          activeCategory = (activeCategory + 1) % categories.length;
+          activeImage = 0;
+          render();
+        });
+
         render();
         if (topMeta) carousel.appendChild(topMeta);
+        carousel.appendChild(mobileCategoryNav);
         media.appendChild(image);
         stage.appendChild(media);
         carousel.appendChild(stage);
