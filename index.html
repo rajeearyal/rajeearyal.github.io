@@ -296,7 +296,10 @@
           meta.style.width = value;
           if (topMeta) topMeta.style.width = value;
           if (topMeta) {
-            links.style.marginTop = `${topMeta.offsetHeight + 8}px`;
+            const isNarrow = window.matchMedia("(max-width: 980px)").matches;
+            links.style.marginTop = isNarrow
+              ? "0px"
+              : `${topMeta.offsetHeight + 8}px`;
           }
         }
         image.addEventListener("load", syncTextWidths);
