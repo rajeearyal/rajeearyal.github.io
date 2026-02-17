@@ -227,6 +227,9 @@
         let activeCategory = 0;
         let activeImage = 0;
         let activeImageUrl = "";
+        let suppressImageClickUntil = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
 
         function basename(path) {
           return String(path).split("/").pop() || "";
@@ -308,7 +311,47 @@
           if (event.key === "Escape") closeLightbox();
         });
 
-        image.addEventListener("click", openLightbox);
+        function shiftImage(direction) {
+          const images = categoryImages[activeCategory] || [];
+          if (images.length < 2) return;
+          activeImage =
+            (activeImage + direction + images.length) % images.length;
+          render();
+        }
+
+        image.addEventListener("click", () => {
+          if (Date.now() < suppressImageClickUntil) return;
+          openLightbox();
+        });
+        image.addEventListener(
+          "touchstart",
+          (event) => {
+            const touch = event.changedTouches && event.changedTouches[0];
+            if (!touch) return;
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+          },
+          { passive: true },
+        );
+        image.addEventListener(
+          "touchend",
+          (event) => {
+            const touch = event.changedTouches && event.changedTouches[0];
+            if (!touch) return;
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            const minSwipe = 34;
+            const maxVerticalDrift = 56;
+            if (
+              Math.abs(deltaX) >= minSwipe &&
+              Math.abs(deltaY) <= maxVerticalDrift
+            ) {
+              shiftImage(deltaX < 0 ? 1 : -1);
+              suppressImageClickUntil = Date.now() + 350;
+            }
+          },
+          { passive: true },
+        );
         function syncTextWidths() {
           const width = Math.max(
             0,
