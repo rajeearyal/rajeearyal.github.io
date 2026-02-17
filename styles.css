@@ -1,0 +1,358 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+#weavingContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  background-image: url("background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+#centerMask {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(calc(90vw - 100px), 1400px);
+  height: min(calc(92vh - 100px), 1000px);
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-sizing: border-box;
+  z-index: 10000;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6px, 0.8vmin, 10px);
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+}
+
+#galleryRoot {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+#topMeta {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  color: #000;
+  font-family: "Alegreya Sans SC", "Book Antiqua", Palatino, serif;
+  font-size: clamp(16px, 1.9vmin, 30px);
+  letter-spacing: 0.04em;
+  text-align: left;
+  max-width: 100%;
+  justify-self: center;
+}
+
+#leftMeta {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 20px;
+  min-width: 0;
+}
+
+#artistName {
+  font-weight: 600;
+  color: #000;
+}
+
+#topMeta a {
+  color: #000;
+  text-decoration: none;
+}
+
+#topMeta a:visited,
+#topMeta a:hover,
+#topMeta a:active {
+  color: #000;
+  text-decoration: none;
+}
+
+#emailLink {
+  color: #000;
+  text-decoration: none;
+}
+
+#sideLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+}
+
+#sideLinks a {
+  color: #000;
+  text-decoration: none;
+  font-family: "Alegreya Sans SC", "Book Antiqua", Palatino, serif;
+  font-size: clamp(16px, 1.8vmin, 26px);
+  line-height: 1.2;
+}
+
+.gallery-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(2px, 0.45vmin, 5px);
+  min-height: 0;
+  padding: 12px 0 0;
+}
+
+.carousel-frame {
+  flex: 1;
+  width: auto;
+  margin: 0 auto;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.carousel-stage {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  justify-self: center;
+}
+
+.carousel-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  min-height: 0;
+  flex: 1;
+}
+
+.carousel-image {
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background-color: transparent;
+  border: none;
+  cursor: zoom-in;
+}
+
+.carousel-meta {
+  text-align: left;
+  font-family: "Alegreya Sans SC", "Book Antiqua", Palatino, serif;
+  color: #000;
+  padding-top: 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 12px;
+  row-gap: 6px;
+  align-items: baseline;
+  justify-content: flex-start;
+  width: auto;
+  max-width: 100%;
+  min-height: 24px;
+  justify-self: center;
+}
+
+.carousel-meta .meta-title {
+  font-weight: 700;
+  font-size: clamp(15px, 1.6vmin, 20px);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.carousel-meta .meta-media {
+  font-size: clamp(14px, 1.3vmin, 18px);
+  line-height: 1.3;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.carousel-meta .meta-year {
+  font-size: clamp(14px, 1.3vmin, 18px);
+  line-height: 1.3;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.carousel-meta .meta-size {
+  font-size: clamp(14px, 1.3vmin, 18px);
+  line-height: 1.3;
+  margin: 0;
+  white-space: nowrap;
+}
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  padding: 24px;
+}
+
+#lightbox[hidden] {
+  display: none !important;
+}
+
+#lightboxImg {
+  max-width: 96vw;
+  max-height: 92vh;
+  object-fit: contain;
+  background: #111;
+}
+
+#lightboxClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 28px;
+  margin-top: 0;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #666;
+  background: #c7c7c7;
+  padding: 0;
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background: #000;
+  border-color: #000;
+}
+
+.carousel-links {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  align-self: flex-start;
+  margin-top: 0;
+  padding-top: 0;
+  box-sizing: border-box;
+  transform: translateX(clamp(18px, 2.8vw, 56px));
+}
+
+.tile-link {
+  display: block;
+  width: 100%;
+  color: #000;
+  text-decoration: none;
+  text-align: left;
+  font-family: "Cormorant SC", "Alegreya Sans SC", "Book Antiqua", Palatino,
+    serif;
+  font-size: clamp(17px, 2vmin, 24px);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  white-space: normal;
+  opacity: 0.75;
+  transition: opacity 120ms ease;
+}
+
+.tile-link:visited,
+.tile-link:hover,
+.tile-link:active {
+  color: #000;
+  text-decoration: none;
+}
+
+.carousel-link.active {
+  font-weight: 700;
+  opacity: 1;
+}
+
+.carousel-link:hover {
+  opacity: 1;
+}
+
+@media (max-width: 980px) {
+  #centerMask {
+    width: min(92vw, 920px);
+    height: min(92vh, 920px);
+  }
+
+  #topMeta {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  #sideLinks {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .gallery-layout {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .carousel-links {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    transform: none;
+  }
+
+}
+
+@media (max-width: 640px) {
+  .carousel-links {
+    column-gap: 8px;
+  }
+
+  .carousel-image {
+    min-height: 170px;
+  }
+}
