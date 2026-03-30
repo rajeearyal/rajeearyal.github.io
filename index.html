@@ -84,6 +84,20 @@
             "14.png",
           ],
         },
+        {
+          label: "Abstract Figurations",
+          folder: "AbstractFigurations",
+          fallback: [
+            "Agape.jpg",
+            "AllAsunder.jpg",
+            "ARoomOfOwn'sOwn.jpg",
+            "FleeingTheCoop.jpg",
+            "PinkPhantom.jpg",
+            "ShownSeen.jpg",
+            "ThingsWeCarry.jpg",
+          ],
+          metaFile: "artworks.json",
+        },
       ];
 
       const IMAGE_EXT = /\.(png|jpe?g|webp|gif|avif)$/i;
@@ -110,6 +124,40 @@
         const normalized = cleanHref.replace(/\\/g, "/");
         const parts = normalized.split("/").filter(Boolean);
         return safeDecodeURIComponent(parts[parts.length - 1] || "");
+      }
+
+      function imageKeyFromUrl(url) {
+        const parts = String(url).split("/");
+        return safeDecodeURIComponent(parts[parts.length - 1] || "");
+      }
+
+      function orderImagesByMetadata(images, metaMap) {
+        if (!metaMap || !images || !images.length) return images;
+
+        const orderedKeys = Object.keys(metaMap).map((key) =>
+          safeDecodeURIComponent(key),
+        );
+        const reverseIndexByKey = new Map();
+        orderedKeys.forEach((key, idx) => {
+          reverseIndexByKey.set(key, orderedKeys.length - 1 - idx);
+        });
+
+        const fallbackRank = Number.MAX_SAFE_INTEGER;
+        return [...images].sort((a, b) => {
+          const aKey = imageKeyFromUrl(a);
+          const bKey = imageKeyFromUrl(b);
+          const aRank = reverseIndexByKey.has(aKey)
+            ? reverseIndexByKey.get(aKey)
+            : fallbackRank;
+          const bRank = reverseIndexByKey.has(bKey)
+            ? reverseIndexByKey.get(bKey)
+            : fallbackRank;
+          if (aRank !== bRank) return aRank - bRank;
+          return aKey.localeCompare(bKey, undefined, {
+            numeric: true,
+            sensitivity: "base",
+          });
+        });
       }
 
       async function getImagesForFolder(folder, fallbackFiles) {
@@ -156,6 +204,9 @@
             }),
           ),
         ]);
+        const orderedCategoryImages = categoryImages.map((images, i) =>
+          orderImagesByMetadata(images, categoryMeta[i]),
+        );
 
         const lightbox = document.createElement("div");
         lightbox.id = "lightbox";
@@ -371,7 +422,7 @@
         window.addEventListener("resize", syncTextWidths);
 
         function render() {
-          const images = categoryImages[activeCategory] || [];
+          const images = orderedCategoryImages[activeCategory] || [];
           activeImage = Math.min(activeImage, Math.max(images.length - 1, 0));
 
           if (images.length) {
